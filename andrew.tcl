@@ -35,7 +35,7 @@ if { [ catch { set log [open $CONST_LOG_FILE w] } ] } {
 	close $log
 }
 
-spawn ssh $andrew_id@$CONST_SERVER [join [lrange $argv 2 end]]
+spawn ssh $andrew_id@$CONST_SERVER {*}[join [lrange $argv 2 end]]
 
 expect {
 	"*password:*" {
