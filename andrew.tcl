@@ -20,8 +20,12 @@ if { $argc < 2 } {
 	gets $log line
 	set info_pair [split $line]
 	close $log
+
+	# arguments for ssh
+	set ssh_arg $argv
 } else {
 	set info_pair $argv
+	set ssh_arg [join [lrange $argv 2 end]]
 }
 
 set andrew_id [lindex $info_pair 0]
@@ -35,7 +39,7 @@ if { [ catch { set log [open $CONST_LOG_FILE w] } ] } {
 	close $log
 }
 
-spawn ssh $andrew_id@$CONST_SERVER {*}[join [lrange $argv 2 end]]
+spawn ssh $andrew_id@$CONST_SERVER {*}$ssh_arg
 
 expect {
 	"*password:*" {
